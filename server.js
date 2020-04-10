@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config()
 const logger = require('morgan');
 const movies = require('./routes/movies') ;
 const users = require('./routes/users');
