@@ -21,7 +21,7 @@ module.exports = {
 				next(err);
 			} else{
 				for (let movie of movies) {
-					moviesList.push({id: movie._id, Name: movie.Name, Release_Date: movie.Release_Date, Category: movie.Category, Description: movie.Description, Director: movie.Director, Stars: movie.Stars, Ratings: movie.Ratings});
+					moviesList.push({id: movie._id, Name: movie.Name, Release_Date: movie.Release_Date, Category: movie.Category, Description: movie.Description,Image: movie.Image, Video: movie.Video, Director: movie.Director, Stars: movie.Stars, Ratings: movie.Ratings});
 				}
 				res.json({status:"success", message: "Movies list found!!!", data:{movies: moviesList}});
 			}
@@ -51,7 +51,7 @@ module.exports = {
 	},
 
 	create: function(req, res, next) {
-		movieModel.create({ Name: req.body.Name, Release_Date: req.body.Release_Date, Category: req.body.Category, Description: req.body.Description, Director: req.body.Director, Stars: req.body.Stars, Ratings: req.body.Ratings }, function (err, result) {
+		movieModel.create({ Name: req.body.Name, Release_Date: req.body.Release_Date, Category: req.body.Category, Description: req.body.Description,Image: req.body.Image, Video: req.body.Video, Director: req.body.Director, Stars: req.body.Stars, Ratings: req.body.Ratings }, function (err, result) {
 				  if (err)
 				  	next(err);
 				  else

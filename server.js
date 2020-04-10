@@ -2,6 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 const movies = require('./routes/movies') ;
 const users = require('./routes/users');
+const admin = require('./routes/admin');
 const reviews = require('./routes/reviews');
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database'); //database configuration
@@ -17,11 +18,12 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/', function(req, res){
-res.json({"tutorial" : "Build REST API with node.js"});
+res.json({"Project" : "Build REST API with node.js"});
 });
 
 // public route
 app.use('/users', users);
+app.use('/admin', admin);
 app.use('/reviews', reviews);
 // private route
 app.use('/movies', validateUser, movies);
