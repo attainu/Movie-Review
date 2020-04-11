@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('./config/database'); //database configuration
 var jwt = require('jsonwebtoken');
 const app = express();
-
+const PORT = process.env.PORT || 5000;
 app.set('secretKey', 'MovieReview'); // jwt secret token
 
 // connection to mongodb
@@ -67,6 +67,6 @@ app.use(function(err, req, res, next) {
 
 });
 
-app.listen(3000, function(){
+app.listen(PORT, function(){
 	console.log('Node server listening on port 3000');
 });
