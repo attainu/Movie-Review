@@ -1,7 +1,7 @@
 {
   "name": "movie-review",
   "version": "1.0.0",
-  "description": "Build Movie Review App using REST API with nodejs, express, mongodb and jwt",
+  "description": "Build Movie-Review App using REST API with nodejs, express, mongodb and jwt",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
