@@ -1,5 +1,5 @@
 {
-  "name": "Movie Review",
+  "name": "moviereview",
   "version": "1.0.0",
   "description": "Build Movie Review App using REST API with nodejs, express, mongodb and jwt",
   "main": "server.js",
@@ -12,7 +12,8 @@
     "Express",
     "REST",
     "API",
-    "Mongodb"
+    "Mongodb",
+    "heroku"
   ],
   "author": "Deepam Bahre",
   "license": "ISC",
@@ -21,6 +22,7 @@
     "body-parser": "1.18.2",
     "dotenv": "^8.2.0",
     "express": "4.16.3",
+    "heroku": "^7.39.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "5.0.13",
     "morgan": "1.9.0"
