@@ -1,7 +1,7 @@
 //Set up mongoose connection
 console.log('in db config');
 const mongoose = require('mongoose');
-const mongoDB = 'mongodb://localhost/Movie_Review';
+const mongoDB = 'mongodb+srv://deepam_bahre:<MovieReview>@cluster0-iiers.mongodb.net/test?retryWrites=true&w=majority';
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 
