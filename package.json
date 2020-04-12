@@ -1,25 +1,36 @@
 {
   "name": "movie-review",
   "version": "1.0.0",
-  "description": "",
+  "description": "Build Movie-Review App using REST API with nodejs, express, mongodb and jwt",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "Node",
+    "Express",
+    "REST",
+    "API",
+    "Mongodb",
+    "heroku"
+  ],
   "author": "Deepam Bahre & Vibhor Vibhav",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
     "express": "^4.16.4",
     "heroku": "^7.39.2",
     "jsonwebtoken": "^8.4.0",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.7",
+    "morgan": "^1.10.0",
     "validator": "^10.9.0"
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
     "nodemon": "^1.18.9"
   }
 }
