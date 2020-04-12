@@ -17,6 +17,10 @@ app.listen(port, () => {
     console.log('Server is up on port ' + port)
 })
 
+app.get('/', function(req, res){
+    res.json({"Project" : "Build REST API with nodejs Successfully"});
+    });
+    
 //const Review = require('./models/review')
 //const User = require('./models/user')
 
