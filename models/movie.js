@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
+//const validator = require('validator')
 
-const User = require('./user')
-const Review = require('./review')
+//const User = require('./user')
+//const Review = require('./review')
 
 
 const movieSchema = new mongoose.Schema(
