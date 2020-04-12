@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const Review = require('./review')
 const Movie = require('./movie')
 
-const userSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -53,74 +53,74 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 })
 
-userSchema.virtual('reviews', {
+adminSchema.virtual('reviews', {
     ref: 'Review',
     localField: '_id',
     foreignField: 'owner'
 })
 
-userSchema.virtual('movies', {
+adminSchema.virtual('movies', {
     ref: 'Movie',
     localField: '_id',
     foreignField: 'addedBy'
 })
 
-// hiding private data from client-side by deleting them from the user object
-userSchema.methods.toJSON = function () {
-    const user = this
-    const userObject = user.toObject()
+// hiding private data from client-side by deleting them from the admin object
+adminSchema.methods.toJSON = function () {
+    const admin = this
+    const adminObject = admin.toObject()
 
-    delete userObject.password
-    delete userObject.tokens
+    delete adminObject.password
+    delete adminObject.tokens
 
-    return userObject
+    return adminObject
 }
 
 //generating Auth token
-userSchema.methods.generateAuthToken = async function () {
-    const user = this
-    const token = jwt.sign({ _id: user._id.toString() }, 'movie-review')
+adminSchema.methods.generateAuthToken = async function () {
+    const admin = this
+    const token = jwt.sign({ _id: admin._id.toString() }, 'movie-review')
 
-    user.tokens = user.tokens.concat({ token })
-    await user.save()
+    admin.tokens = admin.tokens.concat({ token })
+    await admin.save()
 
     return token
 }
 
-userSchema.statics.findByCredentials = async (email, password) => {
-    const user = await User.findOne({ email })
+adminSchema.statics.findByCredentials = async (email, password) => {
+    const admin = await Admin.findOne({ email })
 
-    if (!user) {
+    if (!admin) {
         throw new Error('Unable to login')
     }
 
-    const isMatch = await bcrypt.compare(password, user.password)
+    const isMatch = await bcrypt.compare(password, admin.password)
 
     if (!isMatch) {
         throw new Error('Unable to login')
     }
 
-    return user
+    return admin
 }
 
 // Hash the plain text password before saving
-userSchema.pre('save', async function (next) {
-    const user = this
+adminSchema.pre('save', async function (next) {
+    const admin = this
 
-    if (user.isModified('password')) {
-        user.password = await bcrypt.hash(user.password, 8)
+    if (admin.isModified('password')) {
+        admin.password = await bcrypt.hash(admin.password, 8)
     }
 
     next()
 })
 
-// Delete user reviews when user is removed
-userSchema.pre('remove', async function (next) {
-    const user = this
-    await Review.deleteMany({ owner: user._id })
+// Delete admin reviews when admin is removed
+adminSchema.pre('remove', async function (next) {
+    const admin = this
+    await Review.deleteMany({ owner: admin._id })
     next()
 })
 
-const User = mongoose.model('User', userSchema)
+const Admin = mongoose.model('Admin', adminSchema)
 
-module.exports = User
+module.exports = Admin

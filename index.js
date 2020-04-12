@@ -1,17 +1,24 @@
 const express = require('express')
-require('./db/mongoose')
-const userRouter = require('./routers/user')
-const reviewRouter = require('./routers/review')
-const adminRouter = require('./routers/admin')
-const morgan = require('morgan');
 const app = express()
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const morgan = require('morgan');
+require('./db/mongoose')
 const port = process.env.PORT || 5000
 
-
 app.use(express.json())
-app.use(userRouter)
-app.use(reviewRouter)
-app.use(adminRouter)
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:1234",
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+app.use(require('./routers/user'))
+app.use(require('./routers/review'))
+app.use(require('./routers/admin'))
+app.use(require('./routers/movie'))
 app.use(morgan('dev'));
 app.listen(port, () => {
     console.log('Server is up on port ' + port)
@@ -20,7 +27,5 @@ app.listen(port, () => {
 app.get('/', function(req, res){
     res.json({"Project" : "Build REST API with nodejs Successfully"});
     });
-    
-//const Review = require('./models/review')
-//const User = require('./models/user')
 
+module.exports= app;

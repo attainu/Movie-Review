@@ -1,5 +1,6 @@
 const express = require('express')
-const User = require('../models/user')
+//const User = require('../models/user')
+const Admin = require('../models/admin')
 const Movie = require('../models/movie')
 const Review = require('../models/movie')
 const adminAuth = require('../middleware/adminAuth')
@@ -10,13 +11,13 @@ router.post('/admin', async (req, res) => {
     req.body.isAdmin = true;
 
 
-    const user = new User(req.body)
+    const admin = new Admin(req.body)
 
     try {
 
-        await user.save()
-        const token = await user.generateAuthToken()
-        res.status(201).send({ user, token })
+        await admin.save()
+        const token = await admin.generateAuthToken()
+        res.status(201).send({ admin, token })
     } catch (e) {
         res.status(400).send(e)
     }
@@ -25,12 +26,12 @@ router.post('/admin', async (req, res) => {
 //admin login
 router.post('/admin/login', async (req, res) => {
     try {
-        const user = await User.findByCredentials(req.body.email, req.body.password)
-        if(user.isAdmin==false){
+        const admin = await Admin.findByCredentials(req.body.email, req.body.password)
+        if(admin.isAdmin==false){
             throw new Error()
         }
-        const token = await user.generateAuthToken()
-        res.send({ user, token })
+        const token = await admin.generateAuthToken()
+        res.send({ admin, token })
     } catch (e) {
         res.status(400).send()
     }
@@ -39,10 +40,10 @@ router.post('/admin/login', async (req, res) => {
 //admin logout
 router.post('/admin/logout', adminAuth, async (req, res) => {
     try {
-        req.user.tokens = req.user.tokens.filter((token) => {
+        req.admin.tokens = req.admin.tokens.filter((token) => {
             return token.token !== req.token
         })
-        await req.user.save()
+        await req.admin.save()
 
         res.send()
     } catch (e) {
@@ -53,8 +54,8 @@ router.post('/admin/logout', adminAuth, async (req, res) => {
 //admin logoutAll
 router.post('/admin/logoutAll', adminAuth, async (req, res) => {
     try {
-        req.user.tokens = []
-        await req.user.save()
+        req.admin.tokens = []
+        await req.admin.save()
         res.send()
     } catch (e) {
         res.status(500).send()
@@ -62,7 +63,7 @@ router.post('/admin/logoutAll', adminAuth, async (req, res) => {
 })
 
 router.get('/admin/me', adminAuth, async (req, res) => {
-    res.send(req.user)
+    res.send(req.admin)
 })
 
 //admin update profile
@@ -76,9 +77,9 @@ router.patch('/admin/me', adminAuth, async (req, res) => {
     }
 
     try {
-        updates.forEach((update) => req.user[update] = req.body[update])
-        await req.user.save()
-        res.send(req.user)
+        updates.forEach((update) => req.admin[update] = req.body[update])
+        await req.admin.save()
+        res.send(req.admin)
     } catch (e) {
         res.status(400).send(e)
     }
@@ -90,7 +91,7 @@ router.patch('/admin/me', adminAuth, async (req, res) => {
 router.post('/admin/addMovie', adminAuth, async(req,res) =>{
     const movie = new Movie({
         ...req.body,
-        addedBy: req.user._id
+        addedBy: req.admin._id
     })
 
     try {
@@ -112,7 +113,7 @@ router.patch('/admin/upadteMovie/:id', adminAuth, async(req,res) =>{
     }
 
     try {
-        const movie = await Movie.findOne({ _id: req.params.id, addedBy: req.user._id})
+        const movie = await Movie.findOne({ _id: req.params.id, addedBy: req.admin._id})
 
         if (!movie) {
             return res.status(404).send()
@@ -130,7 +131,7 @@ router.patch('/admin/upadteMovie/:id', adminAuth, async(req,res) =>{
 
 router.delete('/admin/deleteMovie/:id', adminAuth, async(req,res) =>{
     try {
-        const movie = await Movie.findOneAndDelete({ _id: req.params.id, addedBy: req.user._id })
+        const movie = await Movie.findOneAndDelete({ _id: req.params.id, addedBy: req.admin._id })
 
         if (!movie) {
             res.status(404).send()
@@ -146,7 +147,7 @@ router.delete('/admin/deleteMovie/:id', adminAuth, async(req,res) =>{
 
 router.delete('/admin/deleteReview/:id', adminAuth, async(req,res) =>{
     try {
-        const review = await Review.findOneAndDelete({ _id: req.params.id, owner: req.user._id })
+        const review = await Review.findOneAndDelete({ _id: req.params.id, owner: req.admin._id })
 
         if (!review) {
             res.status(404).send()
