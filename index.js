@@ -5,6 +5,8 @@ const cors = require("cors");
 const morgan = require('morgan');
 require('./db/mongoose')
 const port = process.env.PORT || 5000
+const path = require("path");
+const bodyParser = require('body-parser');
 
 app.use(express.json())
 app.use(cookieParser());
@@ -15,6 +17,9 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+app.use(bodyParser.urlencoded({ extended: false })); // Parses urlencoded bodies
+app.use(bodyParser.json()); // Send JSON responses
+
 app.use(require('./routers/user'))
 app.use(require('./routers/review'))
 app.use(require('./routers/admin'))

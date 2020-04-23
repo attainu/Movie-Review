@@ -105,7 +105,7 @@ router.post('/admin/addMovie', adminAuth, async(req,res) =>{
 
 router.patch('/admin/upadteMovie/:id', adminAuth, async(req,res) =>{
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['name', 'Release_Date', 'Category', 'Description','Director','Stars']
+    const allowedUpdates = ['Name', 'Release_Date', 'Category', 'Description','Images','Video','Director','Stars','Ratings','addedBy']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {

@@ -11,7 +11,7 @@ const movieSchema = new mongoose.Schema(
         Release_Date: {type: String, default: 'None'},
         Category: {type: String},
         Description: {type: String},
-        Images: {type: String},
+        Image: {type: String},
         Video: {type: String},
         Director: {type: String},
         Stars: {type: String},
