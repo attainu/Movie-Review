@@ -1,0 +1,38 @@
+{
+  "name": "movie-review",
+  "version": "1.0.0",
+  "description": "Build Movie-Review App using REST",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "keywords": [
+    "Nodejs",
+    "Express",
+    "JWT",
+    "Sequelize",
+    "PostgreSQL",
+    "Authentication"
+  ],
+  "author": "Deepam Bahre & Vibhor Vibhav",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "pg": "^7.5.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.39.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "jest": "^25.4.0",
+    "nodemon": "^2.0.3",
+    "supertest": "^4.0.2"
+  }
+}
